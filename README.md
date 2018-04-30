@@ -29,4 +29,5 @@
 
 - [WildML的博客](http://www.wildml.com/2016/10/learning-reinforcement-learning/)
 - [David Silver’s Reinforcement Learning Course](http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html)
+- [Reinforcement Learning: An Introduction](http://incompleteideas.net/book/the-book-2nd.html)
 - [书本的python代码实现](https://github.com/ShangtongZhang/reinforcement-learning-an-introduction)
