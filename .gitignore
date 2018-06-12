@@ -1,3 +1,5 @@
 .idea
 .ipynb_checkpoints
 experiments
+*.pyc
+__pycache__
