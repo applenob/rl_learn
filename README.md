@@ -16,12 +16,12 @@
 
 ## 实验目录
 
-所有的实验源代码都在`lib`目录下，来自[dennybritz](https://github.com/dennybritz/reinforcement-learning)，这里只做解读和归总。
+所有的实验源代码都在`lib`目录下，来自[dennybritz](https://github.com/dennybritz/reinforcement-learning)。在原先代码的基础上，增加了对实验背景的具体介绍、代码和公式的对照。
 
 - [Gridworld](https://github.com/applenob/rl_learn/blob/master/1_gridworld.ipynb)：对应**MDP**的**Dynamic Programming**
 - [Blackjack](https://github.com/applenob/rl_learn/blob/master/2_blackjack.ipynb)：对应**Model Free**的**Monte Carlo**的Planning和Controlling
-- [Windy Gridworld](https://github.com/applenob/rl_learn/blob/master/3_windy_gridworld.ipynb)：对应**Model Free**的**Temporal Difference**的**On-Policy Controlling**，**SARSA**。
-- [Cliff Walking](https://github.com/applenob/rl_learn/blob/master/4_cliff_walking.ipynb)：对应**Model Free**的**Temporal Difference**的**Off-Policy Controlling**，**Q-learning**。
+- [Windy Gridworld](https://github.com/applenob/rl_learn/blob/master/3_windy_gridworld.ipynb)：对应**Model Free**的**Temporal Difference**的**On-Policy Controlling**：**SARSA**。
+- [Cliff Walking](https://github.com/applenob/rl_learn/blob/master/4_cliff_walking.ipynb)：对应**Model Free**的**Temporal Difference**的**Off-Policy Controlling**：**Q-learning**。
 - [Mountain Car](https://github.com/applenob/rl_learn/blob/master/5_mountain_car.ipynb)：对应Q表格很大无法处理（state空间连续）的**Q-Learning with Linear Function Approximation**。
 - [Atari](https://github.com/applenob/rl_learn/blob/master/6_atari.ipynb)：对应**Deep-Q Learning**。
 
