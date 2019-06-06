@@ -74,13 +74,13 @@
 
 推导：
 
-$v_\pi(s) = \mathbb{E}_\pi[G_t \mid S_t = s]$
+$v_\pi(s) = \mathbb{E}_{\pi}[G_t \mid S_t = s]$
 
-$= \mathbb{E}_\pi [R_{t+1} + \gamma G_{t+1} \mid S_t = s]$
+$= \mathbb{E}_{\pi} [R_{t+1} + \gamma G_{t+1} \mid S_t = s]$
 
 $= \sum_a \pi(a \mid s) \sum_{s', r} p(s', r \mid s, a) [r + \gamma v_\pi(s')].$
 
-$q_{\pi}(s,a) = \mathbb{E}_\pi[G_t \mid S_t = s, A_t = a]$
+$q_{\pi}(s,a) = \mathbb{E}_{\pi}[G_t \mid S_t = s, A_t = a]$
 
 $= \mathbb{E}_\pi [R_{t+1} + \gamma G_{t+1} \mid S_t = s, A_t = a]$
 
