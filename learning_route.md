@@ -31,8 +31,8 @@
 ### 理解MDP的概念
 MDP是对环境的一种建模，能覆盖绝大多数的强化学习问题。满足马尔科夫性质的强化学习任务称为MDP。马尔科夫性质的核心思想是：**当前state继承了所有的环境历史信息**。也就是说在每次决策的时候，我们只用考虑当前状态就可以了。一个机器人在MDP中的轨迹一般像这样：$S_0, A_0, R_1, S_1, A_1, R_2, S_2, A_2, R_3...$
 - `Bellman Expectation Equation`：$v_{\pi}(s) = \sum_a\pi(a|s)\sum_{s',r}p(s',r|s,a)[r+\gamma v_{\pi}(s')]\;\;\forall s \in S$
-- `Bellman Optimality Equation`：$v_*(s)=\underset{a\in A(s)}{max}\sum_{s',r}p(s',r|s,a)[r+\gamma v_*(s')]$和$q_*(s,a)=\sum_{s',r}p(s',r|s,a)[r+\gamma \underset{a'}{max}q_*(s', a')]$
-- 二者本质上都是递推公式，其中蕴含的**“backup”**思路，也就是从后一个状态的价值，逆推回前一个状态的价值。
+- `Bellman Optimality Equation`：$v_*(s)=\underset{a\in A(s)}{max}\sum_{s',r}p(s',r|s,a)[r+\gamma v_*(s')]$ 和 $q_*(s,a)=\sum_{s',r}p(s',r|s,a)[r+\gamma \underset{a'}{max}q_*(s', a')]$
+- 二者本质上都是递推公式，其中蕴含的**backup**思路，也就是从后一个状态的价值，逆推回前一个状态的价值。
 - Bellman Equation表达的是某个状态的价值和其后继状态的价值之间的关系。
 
 ### 有了MDP的概念，接下来考虑如何解决MDP的问题。
