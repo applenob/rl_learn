@@ -41,15 +41,15 @@
 - 使用所有**叶子节点**的动作价值函数去更新动作价值函数。
 - 回报：$G_{t:t+n} = R_{t+1} + \gamma \sum_{a\neq A_{t+1}}\pi(a|S_{t+1})Q_{t+n-1}(S_{t+1}, a) + \gamma\pi(A_{t+1}|S_{t+1})G_{t+1:t+n}$
 
-![](../res/3-step-tree.png)
+![3-step-tree](../res/3-step-tree.png)
 
-![](../res/n-step-tree.png)
+![n-step-tree](../res/n-step-tree.png)
 
 ## n-step $Q(\sigma)$
 
 - $\sigma$代表是否使用全采样。
 - 回报：$G_{t:h} = R_{t+1} + \gamma(\sigma_{t+1}\rho_{t+1}+(1-\sigma_{t+1})\pi(A_{t+1}|S_{t+1}))(G_{t+1:h}-Q_{h-1}(S_{t+1}, A_{t+1})) + \gamma \bar V_{h-1}(S_{t+1})$
 
-![](../res/4-step-q.png)
+![4-step-q](../res/4-step-q.png)
 
-![](../res/n-step-q.png)
+![n-step-q](../res/n-step-q.png)
