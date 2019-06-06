@@ -8,54 +8,65 @@
 
 - 1.了解强化学习的**特征**。也就是它区别于监督学习的地方，能解决什么类型的问题。
 - 2.了解强化学习的**常用解决方案**。针对不同的问题，解决方案主要分成两部分：
-    - 第一部分是**表格类解决方案（Tabular Solution Method）**，针对的是**离散的、简单的**问题；
-    - 第二部分是**近似解决方案（Approximate Solution Methods）**，针对的是**连续的、复杂的**问题。
-
+  - 第一部分是**表格类解决方案（Tabular Solution Method）**，针对的是**离散的、简单的**问题；
+  - 第二部分是**近似解决方案（Approximate Solution Methods）**，针对的是**连续的、复杂的**问题。
 
 ## 具体一些
 
 ### 使用机器人炒股票这个例子
+
 想象我们使用强化学习的技术，构建了一个可以为我们自动炒股票的机器人。这个机器人可以观察股票市场，并对某些股票在某个时间节点的买卖做出建议。那么对这个问题建模需要什么呢？后面我会以这个例子来生动地介绍后面的概念。
 
 ### 理解强化学习的几大要素
+
 `action`，`state`，`reward function`，`value function`，`policy`，`modle (of the environment)`，分清`Reward`,`value function`和`q function`的区别。
 
 在股票机器人的例子中，我们的目标是赚钱，因此：
-- 动作（action）是买还是卖，或者更具体的，买多少，卖多少。
-- 状态（state）是机器人对环境的观察，这就非常多样，比如说某支股票的涨跌现状、各种技术面的特征、基本面的特征等等。
-- 奖励（reward function）是机器人每做一次买卖决策之后，带来的实际收益；
-- 回报（return）：一般用$G$表示，形式化定义： $G_t = R_{t+1} +  \gamma R_{t+2} + ...$ ，回报的定义很有趣，即某一系列决策后，长期的奖励累加，我们给后面的奖励一个折扣系数，即对未来可能赚的钱，我们的兴趣相对少一些；
-- 价值函数（value function）是我们对回报的期望，用来衡量处于某个状态有多好；
-- 环境模型（model）用来模拟环境的行为，给定一个状态和动作，模型可以预测下一个状态和奖励。也就是说，如果我们有一个环境模型，那么每次机器人做了一次交易之后，我们就可以预测出它的下一个状态是什么，收到的奖励有多少（这个观点在炒股票这个例子中听起来不太可行）。
+
+- **动作**（action）是买还是卖，或者更具体的，买多少，卖多少。
+- **状态**（state）是机器人对环境的观察，这就非常多样，比如说某支股票的涨跌现状、各种技术面的特征、基本面的特征等等。
+- **奖励**（reward function）是机器人每做一次买卖决策之后，带来的实际收益；
+- **回报**（return）：一般用$G$表示，形式化定义： $G_t = R_{t+1} +  \gamma R_{t+2} + ...$ ，回报的定义很有趣，即某一系列决策后，长期的奖励累加，我们给后面的奖励一个折扣系数，即对未来可能赚的钱，我们的兴趣相对少一些；
+- **价值函数**（value function）是我们对回报的期望，用来衡量处于某个状态有多好；
+- **环境模型**（model）用来模拟环境的行为，给定一个状态和动作，模型可以预测下一个状态和奖励。也就是说，如果我们有一个环境模型，那么每次机器人做了一次交易之后，我们就可以预测出它的下一个状态是什么，收到的奖励有多少（这个观点在炒股票这个例子中听起来不太可行）。
 
 ### 理解MDP的概念
+
 MDP是对环境的一种建模，能覆盖绝大多数的强化学习问题。满足马尔科夫性质的强化学习任务称为MDP。马尔科夫性质的核心思想是：**当前state继承了所有的环境历史信息**。也就是说在每次决策的时候，我们只用考虑当前状态就可以了。一个机器人在MDP中的轨迹一般像这样：$S_0, A_0, R_1, S_1, A_1, R_2, S_2, A_2, R_3...$
+
 - `Bellman Expectation Equation`：$v_{\pi}(s) = \sum_a\pi(a|s)\sum_{s',r}p(s',r|s,a)[r+\gamma v_{\pi}(s')]\;\;\forall s \in S$
-- `Bellman Optimality Equation`：$v_*(s)=\underset{a\in A(s)}{max}\sum_{s',r}p(s',r|s,a)[r+\gamma v_*(s')]$ 和 $q_*(s,a)=\sum_{s',r}p(s',r|s,a)[r+\gamma \underset{a'}{max}q_*(s', a')]$
+- `Bellman Optimality Equation`：
+  - $v_*(s)=\underset{a\in A(s)}{max}\sum_{s',r}p(s',r|s,a)[r+\gamma v_*(s')]$
+  - $q_*(s,a)=\sum_{s',r}p(s',r|s,a)[r+\gamma \underset{a'}{max}q_*(s', a')]$
 - 二者本质上都是递推公式，其中蕴含的**backup**思路，也就是从后一个状态的价值，逆推回前一个状态的价值。
-- Bellman Equation表达的是某个状态的价值和其后继状态的价值之间的关系。
+- **Bellman Equation**表达的是某个状态的价值和其后继状态的价值之间的关系。
 
 ### 有了MDP的概念，接下来考虑如何解决MDP的问题。
+
 解决MDP的问题的三种基本方法：
+
 - **动态规划（Dynamic Programming）**：理论上完美，但需要很强的算力和准确的环境model。
 - **蒙特卡洛（Monte Carlo Methods）**：**不需要模型**，可操作性强，但不太适合一步一步的增量计算。
 - **差分学习（Temporal-Difference Learning）**：**不需要模型**，也是增量式的，但分析起来很复杂。
 
 继续使用机器人炒股票的例子去理解：
+
 - 1.动态规划必须保证有环境模型，也就是给定一个状态和动作，我们可以预测下一个状态和奖励；
 - 2.蒙特卡洛的方法好比，机器人参与了好几个**系列**的买卖决策操作，然后根据**最终的收益**，去更新之前的每个状态的价值和策略。
 - 3.差分学习的方法好比，机器人**每一次**买卖操作，都会有一个收益，根据**这个收益**直接更新状态的价值和策略。
 - 需要注意的是，动态规划因为有环境模型，所以总是可以知道某一个状态和动作对应的奖励是什么，因此没有**“实验”**的概念；后面两种方案，都需要用**实验中实际产生的奖励**作为反馈。
 
 三种基本方法之间又可以相互结合：
+
 - 蒙特卡洛+差分学习，使用多步bootstrap。
 - 差分学习+模型学习。
 
 ### 近似函数：
+
 - 近似价值函数：目标$J(w) = E_{\pi}[(v_{\pi}(S)-\hat v(S,w))^2]$，使近似的价值函数接近实际的价值函数。
-    - `Q-Learning with Linear Function Approximation`
-    - `Deep-Q Learning（DQN）`：使用了`Experience Replay`和`fixed Q-learning target`。
+  - `Q-Learning with Linear Function Approximation`
+  - `Deep-Q Learning（DQN）`：使用了`Experience Replay`和`fixed Q-learning target`。
 - 拟合策略函数：目标$J_1(\theta)=V^{\pi_{\theta}}(s_1) = E_{\pi_{\theta}}[v_1]$，使找到的策略函数可以使价值函数最大化。
-    - `Monte-Carlo Policy Gradient (REINFORCE)`
+  - `Monte-Carlo Policy Gradient (REINFORCE)`
 - 近似价值函数 + 拟合策略函数
-    - ` Actor-Critic`：Critic：更新价值函数的参数$w$ 。Actor：更新策略的参数 $θ$ ，使用critic建议的方向。
+  - `Actor-Critic` ：**Critic**：更新价值函数的参数$w$ 。**Actor**：更新策略的参数 $θ$ ，使用critic建议的方向。

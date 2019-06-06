@@ -1,10 +1,11 @@
-# 强化学习的学习仓库
+# [WIP]强化学习的学习仓库
 
 这是我个人学习**强化学习**的时候收集的比较经典的学习资料、笔记和代码，分享给所有人。
 
 为了直接在GitHub上用markdown文件看公式，推荐安装chrome插件：[MathJax Plugin for Github](https://chrome.google.com/webstore/detail/mathjax-plugin-for-github/ioemnmodlmafdkllaclgeombjnmnbima)
 
 ## 入门指南
+
 - [入门指南](learning_route.md)
 
 ## 课程笔记
@@ -13,8 +14,8 @@
 - [课程对应的所有PPT](slides)
 - [Sutton 的 Reinforcement Learning: An Introduction书本学习笔记](reinforcement_learning.ipynb)
 - [书本的各版本pdf](book)
-    - [2017-6 draft](book/bookdraft2017june19.pdf)
-    - [2018 second edition](book/bookdraft2018.pdf)
+  - [2017-6 draft](book/bookdraft2017june19.pdf)
+  - [2018 second edition](book/bookdraft2018.pdf)
 
 ## 实验目录
 
