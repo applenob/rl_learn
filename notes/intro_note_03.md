@@ -56,9 +56,9 @@
 
 ## 价值函数
 
-- 关于策略$\pi$的state-value函数：$v_{\pi}(s) = \mathbb{E}_{\pi}[G_t|S_t=s]=\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^kR_{t+k+1}|S_t=s]$
+- 关于策略$\pi$的state-value函数：$v_{\pi}(s) = \mathbb{E}_{\pi}[G_t|S_t=s]$ $=\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^kR_{t+k+1}|S_t=s]$
 - 即，**在使用策略$\pi$的前提下，衡量处于某个state有多好**。
-- 关于策略$\pi$的action-value函数：$q_{\pi}(a,s) = \mathbb{E}_{\pi}[G_t|S_t=s,A_t=a] = \mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^kR_{t+k+1}|S_t=s,A_t=a]$
+- 关于策略$\pi$的action-value函数：$q_{\pi}(a,s) = \mathbb{E}_{\pi}[G_t|S_t=s,A_t=a]$ $= \mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^kR_{t+k+1}|S_t=s,A_t=a]$
 - 即，在使用策略$\pi$的前提下，衡量处于某个state下，执行某个action有多好。
 
 ## Bellman Euqation
@@ -68,28 +68,31 @@
   - 1.方括号中是根据后继状态的价值重新估计的价值函数，再在动作空间、后继状态空间和动作空间用相应的概率做加权求和。
   - 2.**表达的是某个状态的价值和其后继状态的价值之间的关系。**
 - **backup**：是强化学习方法的核心，以时序意义上的回退，用下一个时刻的值去评估当前时刻的值。
-- **Bellman Expectation Euqation for $q_{\pi}$**：$q_{\pi}(s,a) = \sum_{s'}p(s',r|s,a)[r+\gamma \sum_{a'}q(s',a')]$
-- ![](https://github.com/applenob/rl_learn/raw/master/res/backup.png)
+- **Bellman Expectation Euqation for** $q_{\pi}$：$q_{\pi}(s,a) = \sum_{s'}p(s',r|s,a)[r+\gamma \sum_{a'}q(s',a')]$
+
+![backup](../res/backup.png)
 
 推导：
 
 $v_\pi(s) = \mathbb{E}_\pi[G_t \mid S_t = s]$
 
-$= \mathbb{E}_\pi[R_{t+1} + \gamma G_{t+1} \mid S_t = s]$
+$= \mathbb{E}_\pi [R_{t+1} + \gamma G_{t+1} \mid S_t = s]$
 
 $= \sum_a \pi(a \mid s) \sum_{s', r} p(s', r \mid s, a) [r + \gamma v_\pi(s')].$
 
 $q_{\pi}(s,a) = \mathbb{E}_\pi[G_t \mid S_t = s, A_t = a]$
 
-$= \mathbb{E}_\pi[R_{t+1} + \gamma G_{t+1} \mid S_t = s, A_t = a]$
+$= \mathbb{E}_\pi [R_{t+1} + \gamma G_{t+1} \mid S_t = s, A_t = a]$
 
 $= \sum_{s',r}p(s',r|s,a)[r+\gamma \sum_{a'}q(s',a')]$
 
 参考资料：https://joshgreaves.com/reinforcement-learning/understanding-rl-the-bellman-equations/
 
 ## 最优化价值函数
+
 - $v_*(s) = \underset{\pi}{max}v_{\pi}(s)$
 - $q_*(s,a) = \underset{\pi}{max}q_{\pi}(s,a)$
 - **Bellman Optimality Euqation for $v_*(s)$**：$v_*(s)=\underset{a\in A(s)}{max}\sum_{s',r}p(s',r|s,a)[r+\gamma v_*(s')]$
 - **Bellman Optimality Euqation for $q_*(s,a)$**：$q_*(s,a)=\sum_{s',r}p(s',r|s,a)[r+\gamma \underset{a'}{max}q_*(s', a')]$
-- ![](https://github.com/applenob/rl_learn/raw/master/res/backup_opt.png)
+
+![backup_opt](../res/backup_opt.png)

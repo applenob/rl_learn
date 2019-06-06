@@ -28,7 +28,7 @@ $V(s)\leftarrow average(Return(s))$
 
 ## 蒙特卡洛控制
 
-- **控制（control）**的目的是找到最优策略。
+- **控制**（control）的目的是找到最优策略。
 - ![mc_policy_iter](../res/mc_policy_iter.png)
 - 其中，$E$代表策略的evaluation，$I$代表策略的improvement。
 
@@ -45,8 +45,8 @@ $V(s)\leftarrow average(Return(s))$
 
 ## on-policy vs off-policy
 
-- on-policy只有一套policy，更简单，是首选。
-- off-policy使用两套policy，更复杂、更难收敛；但也更通用、更强大。
+- on-policy只有**一套policy**，更简单，是首选。
+- off-policy使用**两套policy**，更复杂、更难收敛；但也更通用、更强大。
 - on-policy和off-policy本质依然是Exploit vs Explore的权衡。
 
 ## on-policy
@@ -55,32 +55,42 @@ $V(s)\leftarrow average(Return(s))$
 
 ## off-policy
 
-- 所有的MC控制方法都面临一个**困境**：它们都想找到一个最优的策略，但却必须采用非最优的策略去尽可能多地探索（explore）数据。
+- 所有的MC控制方法都面临一个**困境**：它们都想找到一个最优的策略，但却**必须采用非最优的策略去尽可能多地探索**（explore）数据。
 - 直接使用**两套策略**：采样用的policy称为`behavior policy`，最终的目标policy：`target policy`。这就是off-policy。
-- 假设目标策略是$\pi$，行为策略是$b$，那么对于所有的$\pi(a|s)>0$必然有$b(a|s)>0$，这称为“覆盖”（coverage）。一个常见的例子是：行为策略使用价值函数的greedy policy，而行为策略使用ε-greedy policy。
+- 假设目标策略是$\pi$，行为策略是$b$，那么对于所有的$\pi(a|s)>0$必然有$b(a|s)>0$，这称为“覆盖”（coverage）。一个常见的例子是：行为策略使用价值函数的greedy policy，而目标策略使用ε-greedy policy。
 
 ## 重要性采样（importance sampling）
 
-- 几乎所有的off-policy都使用**重要性采样（importance sampling）**。
-- 为什么要使用重要性采样？我们希望在使用目标策略$\pi$的情况下用均值估计价值的期望，但我们获得的是在使用行为策略$b$的情况下的均值，也就是：$\mathbb{E}[G_t \mid S_t =s] = v_b(s)$。这二者是有差距的。因此我们希望使用重要性采样去纠正。
-- 给定初始状态$S_t$，后续的状态-动作轨迹在使用策略$\pi$的情况下的概率为：
-$$Pr\{At,S_{t+1}, A_{t+1}, ... S_T \mid S_t, A_{t:T −1} \sim \pi\}=\prod_{k=t}^{T-1}\pi(A_k\mid S_k)p(S_{k+1}\mid S_k, A_k)$$
-- 引入**重要性采样比例（the importancesampling ratio）**：
-$$\rho_{t:T −1}=\frac{\prod_{k=t}^{T-1}\pi(A_k\mid S_k)p(S_{k+1}\mid S_k, A_k)}{\prod_{k=t}^{T-1}b(A_k\mid S_k)p(S_{k+1}\mid S_k, A_k)}=\prod_{k=t}^{T-1}\frac{\pi(A_k\mid S_k)}{b(A_k\mid S_k)}$$
+几乎所有的off-policy都使用**重要性采样（importance sampling）**。
+
+为什么要使用重要性采样？我们希望在使用目标策略$\pi$的情况下用均值估计价值的期望，但我们获得的是在使用行为策略$b$的情况下的均值，也就是：$\mathbb{E}[G_t \mid S_t =s] = v_b(s)$。这二者是有差距的。因此我们希望使用重要性采样去纠正。
+
+给定初始状态$S_t$，后续的状态-动作轨迹在使用策略$\pi$的情况下的概率为：
+$Pr\{At,S_{t+1}, A_{t+1}, ... S_T \mid S_t, A_{t:T −1} \sim \pi\}$ $=\prod_{k=t}^{T-1}\pi(A_k\mid S_k)p(S_{k+1}\mid S_k, A_k)$
+
+引入**重要性采样比例（the importancesampling ratio）**：
+$\rho_{t:T −1}=\frac{\prod_{k=t}^{T-1}\pi(A_k\mid S_k)p(S_{k+1}\mid S_k, A_k)}{\prod_{k=t}^{T-1}b(A_k\mid S_k)p(S_{k+1}\mid S_k, A_k)}$ $=\prod_{k=t}^{T-1}\frac{\pi(A_k\mid S_k)}{b(A_k\mid S_k)}$
 上面这个式子正好巧妙地把MDP中未知的状态转移概率约掉。
-- 于是return的期望又可以得到校正：$\mathbb{E}[\rho_{t:T−1}G_t \mid S_t =s] = v_{\pi}(s)$
-- odinary importance sampling：
+
+于是return的期望又可以得到校正：$\mathbb{E}[\rho_{t:T−1}G_t \mid S_t =s] = v_{\pi}(s)$
+
+odinary importance sampling：
 $$V(s) = \frac{\sum_{t\in J(s)} \rho_{t:T (t)-1}Gt}{\mid J(s)\mid} $$
-- weighted importance sampling：
+
+weighted importance sampling：
 $$V(s) = \frac{\sum_{t\in J(s)} \rho_{t:T (t)-1}Gt}{\sum_{t\in J(s)} \rho_{t:T (t)-1}} $$
-- odinary importance sampling vs. weighted importance sampling:
-    - odinary importance sampling：无偏差，但方差没有保证。
-    - weighted importance sampling：有偏差，方差有上限。
-- 评估：
-- ![](https://github.com/applenob/rl_learn/raw/master/res/off_policy_mc_prediction.png)
-- 上面的评估使用了采样权重增量式的方法。
+
+odinary importance sampling vs. weighted importance sampling:
+  
+  - odinary importance sampling：无偏差，但方差没有保证。
+  - weighted importance sampling：有偏差，方差有上限。
+
+评估：
+
+![off_policy_mc_prediction](../res/off_policy_mc_prediction.png)
+
+上面的评估使用了采样权重增量式的方法。
 
 控制：
 
-![](https://github.com/applenob/rl_learn/raw/master/res/off_policy_mc_control.png)
-
+![off_policy_mc_control](../res/off_policy_mc_control.png)

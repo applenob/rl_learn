@@ -11,9 +11,9 @@
 - 一步TD对应的回报：$G_{t:t+1} = R_{t+1} + \gamma V_t(S_{t+1})$
 - n-step的回报：$G_{t:t+n} = R_{t+1} + \gamma R_{t+2}+...+\gamma^{n-1}R_{t+n}+\gamma^nV_{t+n+1}(S_{t+n})$
 
-![](../res/n-step-pred.png)
+![n-step-pred](../res/n-step-pred.png)
 
-![](../res/n-step-est.png)
+![n-step-est](../res/n-step-est.png)
 
 ## n-step Sarsa
 
