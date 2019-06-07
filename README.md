@@ -15,7 +15,7 @@
 - Sutton 的 Reinforcement Learning: An Introduction书本学习笔记
   - [1. Introduction](notes/intro_note_01.md)
   - [2. Multi-armed Bandits](notes/intro_note_02.md)
-  - [3. Finite Markov DecisionProcesses](#notes/intro_note_03.md)
+  - [3. Finite Markov DecisionProcesses](notes/intro_note_03.md)
   - [4. Dynamic Programming](notes/intro_note_04.md)
   - [5. Monte Carlo Methods](notes/intro_note_05.md)
   - [6. Temporal-Difference Learning](notes/intro_note_06.md)
