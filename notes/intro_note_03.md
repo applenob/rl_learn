@@ -6,7 +6,8 @@
 - agent交互的对象，外部环境，称为**Environment**。
 - 在时刻t，agent的所处的环境用状态：$S_t \in S$表示，$S$是可能的状态集。假设agent采用了动作$A_t\in A(S_t)$，$A(S_t)$代表在状态$S_t$下可能的动作集。
 - 到了下一个时刻t+1，agent收到了一个奖励：$R_{t+1} \in R$，并且发现自己处在一个新的state中：$S_{t+1}$。
-- ![agent_env](../res/agent_env.png)
+
+![agent_env](../res/agent_env.png)
 
 ## 什么是有限
 
@@ -96,3 +97,56 @@ $= \sum_{s',r}p(s',r|s,a)[r+\gamma \sum_{a'}q(s',a')]$
 - **Bellman Optimality Euqation for $q_*(s,a)$**：$q_*(s,a)=\sum_{s',r}p(s',r|s,a)[r+\gamma \underset{a'}{max}q_*(s', a')]$
 
 ![backup_opt](../res/backup_opt.png)
+
+## 代码分析
+
+[完整源码](https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/blob/master/chapter03/grid_world.py)
+
+**问题描述**：
+
+- 动作空间：上下左右。
+- 奖励：到A点会有10的奖励，且会被带到A'，到B有10的奖励，且会被带到B'。如果动作要把agent带离格子世界，则agent不懂，且奖励是-1。其他动作奖励是0。
+
+![3_grid_world](../res/3_grid_world.jpg)
+
+假设初始策略是等概率地选择上下左右这四个动作：
+
+```python
+# left, up, right, down
+ACTIONS = [np.array([0, -1]),
+           np.array([-1, 0]),
+           np.array([0, 1]),
+           np.array([1, 0])]
+ACTION_PROB = 0.25
+```
+
+下面代码描述了给定当前状态和动作，下一个状态和奖励是什么。
+
+```python
+def step(state, action):
+    if state == A_POS:
+        return A_PRIME_POS, 10
+    if state == B_POS:
+        return B_PRIME_POS, 5
+
+    state = np.array(state)
+    next_state = (state + action).tolist()
+    x, y = next_state
+    if x < 0 or x >= WORLD_SIZE or y < 0 or y >= WORLD_SIZE:
+        reward = -1.0
+        next_state = state
+    else:
+        reward = 0
+    return next_state, reward
+```
+
+下面代码使用bellman equation做backup，去迭代价值函数：
+
+```python
+for i in range(0, WORLD_SIZE):
+    for j in range(0, WORLD_SIZE):
+        for action in ACTIONS:
+            (next_i, next_j), reward = step([i, j], action)
+            # bellman equation for value function
+            new_value[i, j] += ACTION_PROB * (reward + DISCOUNT * value[next_i, next_j])
+```
