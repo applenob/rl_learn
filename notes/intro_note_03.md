@@ -56,9 +56,9 @@
 
 ## 价值函数
 
-- 关于策略$\pi$的state-value函数：$v_{\pi}(s) = {\mathbb{E}}_{\pi}[G_t|S_t=s]$ $=\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^kR_{t+k+1}|S_t=s]$
+- 关于策略$\pi$的state-value函数：$v_{\pi}(s) = {\mathbb{E}}_{\pi}[G_t|S_t=s] = \mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^kR_{t+k+1}|S_t=s]$
 - 即，**在使用策略$\pi$的前提下，衡量处于某个state有多好**。
-- 关于策略$\pi$的action-value函数：$q_{\pi}(a,s) = \mathbb{E}_{\pi}[G_t|S_t=s,A_t=a]$ $= \mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^kR_{t+k+1}|S_t=s,A_t=a]$
+- 关于策略$\pi$的action-value函数：$q_{\pi}(a,s) = \mathbb{E}_{\pi}[G_t|S_t=s,A_t=a] = \mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^kR_{t+k+1}|S_t=s,A_t=a]$
 - 即，在使用策略$\pi$的前提下，衡量处于某个state下，执行某个action有多好。
 
 ## Bellman Euqation
